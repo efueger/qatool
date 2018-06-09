@@ -33,6 +33,14 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      # install java 8
+      - run: echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 boolean true" > debconf.txt
+      - run: sudo debconf-set-selections debconf.txt
+      - run: sudo apt-get install software-properties-common
+      - run: sudo add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main"
+      - run: sudo apt-get update
+      - run: sudo apt-get install oracle-java8-installer
+
       # run tests!
       - run: npm test
 
