@@ -122,5 +122,8 @@ fabric.properties
 # Local database files
 db/
 
+# temporary working directory
+tmp/
+
 # Security data
 keys.js

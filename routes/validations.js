@@ -7,9 +7,11 @@ const log = require('../macro/log.js');
 const psi = require('../macro/psi.js');
 const router = express.Router();
 const ValidatorPsi = require('../macro/validators/ValidatorPsi.js');
+const ValidatorW3c = require('../macro/validators/ValidatorW3c.js');
 
 // バリデータインスタンスの生成
 const validatorPsi = new ValidatorPsi();
+const validatorW3c = new ValidatorW3c();
 
 const logError = (err) => {
 	log('[Error occurred in Validations Router]');
@@ -93,6 +95,14 @@ router.post('/:location', async(req, res) => {
 							res.status(500).res('Sorry, internal server error occurred. (500)');
 						});
 						validated.push(validatorPsi.getLabel());
+					}
+					if(req.body.w3c && req.body.w3c === 'true') {
+						const resultValidateW3c = await validatorW3c.validate(found.html);
+						await saveValidateResult(decodedUrl, validatorW3c.getLabel(), resultValidateW3c).catch(err => {
+							logError(err);
+							res.status(500).res('Sorry, internal server error occurred. (500)');
+						});
+						validated.push(validatorW3c.getLabel());
 					}
 					if(validated.length > 0) {
 						res.send(`Successfully validated "${decodedUrl}". (${validated})`);
