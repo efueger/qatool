@@ -1,0 +1,16 @@
+{
+	"files": {
+		"included": [
+			"macro/**/*.js",
+			"routes/**/*.js",
+			"tests/**/*.js",
+			"./app.js",
+			"./options.js"
+		],
+		"excluded": [
+			"plugins/vendor/sparkr/sparkr.js",
+			"plugins/vendor/**/*.js",
+			"!regexp:/vendor/"
+		]
+	}
+}
