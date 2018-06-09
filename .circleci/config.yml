@@ -50,6 +50,8 @@ jobs:
       # load CircleCI environment variables
       - run: export GOOGLE_API_KEY=$GOOGLE_API_KEY
 
+      - run: ./cc-test-reporter before-build
+
       # run tests!
       - run: npm test
 
