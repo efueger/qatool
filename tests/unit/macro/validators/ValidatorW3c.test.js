@@ -13,11 +13,11 @@ const v = new ValidatorW3c();
 
 // テスト実行
 test('文法エラーの無いHTMLをバリデーションすると、合格とみなされます。', async t => {
-	const result = await v.validate(validHtmlStr);
+	const result = await v.validate(validHtmlStr).catch(err => {t.log(err);});
 	t.true(result.isValid());
 });
 
 test('文法エラーの有るHTMLをバリデーションすると、不合格とみなされます。', async t => {
-	const result = await v.validate(invalidHtmlStr);
+	const result = await v.validate(invalidHtmlStr).catch(err => {t.log(err);});
 	t.false(result.isValid());
 });
