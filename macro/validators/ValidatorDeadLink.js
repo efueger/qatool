@@ -52,9 +52,10 @@ module.exports = class ValidatorDeadLink extends Validator {
 	 * デッドリンクが一つもなければ合格とみなし、一つでもデッドリンクがあれば不合格とみなします。
 	 * @param {String} htmlUrl 検証する HTML の URL
 	 * @param {String} htmlStr 検証する HTML
+	 * @param {Boolean} isCacheFoundDeadLinks false にした場合、デッドリンクを見つけても DB にメモを行いません
 	 * @returns {Promise} バリデーションが完了したら解決する Promise
 	 */
-	validate(htmlUrl, htmlStr) {
+	validate(htmlUrl, htmlStr, isCacheFoundDeadLinks=true) {
 		return new Promise(async function(resolve, reject) {
 			const paths = getReferredFilePath(htmlUrl, htmlStr);
 			let deadLinks = [];
@@ -66,7 +67,9 @@ module.exports = class ValidatorDeadLink extends Validator {
 					if(!isReachableResource) {deadLinks.push(path);}
 				}
 			}
-			for(const deadLink of deadLinks) {await saveDeadLink(deadLink).catch(err => reject(err));}
+			if(isCacheFoundDeadLinks) {
+				for(const deadLink of deadLinks) {await saveDeadLink(deadLink).catch(err => reject(err));}
+			}
 			resolve(new ValidationResult(deadLinks.length === 0, deadLinks));
 		});
 	}

@@ -30,10 +30,11 @@ const v = new ValidatorDeadLink();
 
 
 test('リンク切れのファイル参照が一つでも存在すればNGとみなす。', async t => {
-	const result = await v.validate(htmlUrlExample, htmlInvalid);
+	const result = await v.validate(htmlUrlExample, htmlInvalid, false).catch(err => t.log(err));
 	t.false(result.isValid());
 });
+
 test('リンク切れのファイル参照が一つも存在しなければOKとみなす。', async t => {
-	const result = await v.validate(htmlUrlExample, htmlValid);
+	const result = await v.validate(htmlUrlExample, htmlValid, false).catch(err => t.log(err));
 	t.true(result.isValid());
 });
