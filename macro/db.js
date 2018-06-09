@@ -4,6 +4,7 @@ const log = require('./log.js');
 
 // データベースファイルパス定義
 const PATH_DB_CRAWLS = 'db/crawls';
+const PATH_DB_VALIDATIONS = 'db/validations';
 
 /**
  * NeDB の初期化オプションオブジェクトを返します。
@@ -23,11 +24,13 @@ const createOptions = filename => {
 
 // データベース読込
 const dbCrawls = new DataStore(createOptions(PATH_DB_CRAWLS));
+const dbValidations = new DataStore(createOptions(PATH_DB_VALIDATIONS));
 
 /**
  * 読込が完了した各データベースの参照を格納したオブジェクトです。
  * @type {{crawls: (Datastore|*)}}
  */
 module.exports = {
-	crawls: dbCrawls
+	crawls: dbCrawls,
+	validations: dbValidations
 };

@@ -121,3 +121,6 @@ fabric.properties
 
 # Local database files
 db/
+
+# Security data
+keys.js
