@@ -111,7 +111,7 @@ router.post('/:location', async(req, res) => {
 							logError(err);
 							res.status(500).res('Sorry, internal server error occurred. (500)');
 						});
-						validated.push(validatorDeadLink);
+						validated.push(validatorDeadLink.getLabel());
 					}
 					if(validated.length > 0) {
 						res.send(`Successfully validated "${decodedUrl}". (${validated})`);
