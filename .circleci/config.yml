@@ -44,8 +44,8 @@ jobs:
       - run: sudo apt-get install oracle-java8-installer
 
       # Setup Code Climate test-reporter
-      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-      - run: chmod +x ./cc-test-reporter
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./coverage/cc-test-reporter
+      - run: chmod +x ./coverage/cc-test-reporter
 
       # load CircleCI environment variables
       - run: export GOOGLE_API_KEY=$GOOGLE_API_KEY
@@ -54,5 +54,5 @@ jobs:
       - run: npm test
 
       # Send test coverage to Code Climate
-      - run: ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+      - run: ./coverage/cc-test-reporter after-build --coverage-input-type clover --exit-code $?
 
