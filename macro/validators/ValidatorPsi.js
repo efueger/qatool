@@ -1,4 +1,6 @@
+const log = require('../log.js');
 const options = require('../../options.js');
+const psi = require('psi');
 const ValidationResult = require('./ValidationResult.js');
 const Validator = require('./Validator.js');
 
@@ -16,13 +18,15 @@ module.exports = class ValidatorPsi extends Validator {
 	 * バリデーションを実行します。
 	 * デスクトップとモバイルそれぞれのスピードスコアが最低合格ラインを満たしていれば合格とみなし、
 	 * さもなければ不合格とみなします。
-	 * @param {Object} psiDesktopResult デスクトップのスピードテストリザルト
-	 * @param {Object} psiMobileResult モバイルのスピードテストリザルト
-	 * @returns {module.ValidationResult} バリデーション結果
+	 * @param url 調べたい URL
+	 * @param key Google PageSpeed Insights の API キー
+	 * @returns {Promise<module.ValidationResult>} 検証が完了したら解決する Promise
 	 */
-	validate(psiDesktopResult, psiMobileResult) {
-		const desktopSpeedScore = psiDesktopResult.ruleGroups.SPEED.score;
-		const mobileSpeedScore = psiMobileResult.ruleGroups.SPEED.score;
+	async validate(url, key) {
+		const resultDesktop = await psi(url, {key: key, strategy: 'desktop'}).catch(err => log(err));
+		const resultMobile = await psi(url, {key: key, strategy: 'mobile'}).catch(err => log(err));
+		const desktopSpeedScore = resultDesktop.ruleGroups.SPEED.score;
+		const mobileSpeedScore = resultMobile.ruleGroups.SPEED.score;
 		const isValidDesktop = desktopSpeedScore >= options.validation.psi.speedThreshold.desktop;
 		const isValidMobile = mobileSpeedScore >= options.validation.psi.speedThreshold.mobile;
 		return new ValidationResult(isValidDesktop && isValidMobile, [

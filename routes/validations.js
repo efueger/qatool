@@ -4,7 +4,6 @@ const db = require('../macro/db.js');
 const isUrl = require('../macro/isUrl.js');
 const keys = require('../keys.js');
 const log = require('../macro/log.js');
-const psi = require('../macro/psi.js');
 const router = express.Router();
 const ValidatorPsi = require('../macro/validators/ValidatorPsi.js');
 const ValidatorW3c = require('../macro/validators/ValidatorW3c.js');
@@ -89,8 +88,8 @@ router.post('/:location', async(req, res) => {
 				else {
 					const validated = [];
 					if(req.body.psi && req.body.psi === 'true') {
-						const psiResult = await psi(decodedUrl, keys.googleApiKey).catch(err => log(err));
-						await saveValidateResult(decodedUrl, validatorPsi.getLabel(), validatorPsi.validate(psiResult.desktop, psiResult.mobile)).catch(err => {
+						const resultValidatePsi = await validatorPsi.validate(req.params.location, keys.googleApiKey);
+						await saveValidateResult(decodedUrl, validatorPsi.getLabel(), resultValidatePsi).catch(err => {
 							logError(err);
 							res.status(500).res('Sorry, internal server error occurred. (500)');
 						});
