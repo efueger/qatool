@@ -41,6 +41,9 @@ jobs:
       - run: sudo apt-get update
       - run: sudo apt-get install oracle-java8-installer
 
+      # load CircleCI environment variables
+      - run: export GOOGLE_API_KEY=$GOOGLE_API_KEY
+
       # run tests!
       - run: npm test
 

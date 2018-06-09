@@ -1,5 +1,11 @@
 // ツール取得
-const keys = require('../../../../keys.js');
+let keys = null;
+try {
+	keys = require('../../../../keys.js');
+} catch(err) {
+	console.log(err);
+	keys = {googleApiKey: process.env.GOOGLE_API_KEY};
+}
 const options = require('../../../../options.js');
 const test = require('ava');
 const ValidatorPsi = require('../../../../macro/validators/ValidatorPsi.js');
