@@ -53,10 +53,6 @@ jobs:
       # run tests!
       - run: npm test
 
-      # Move coverage report files to Code Climate looking path
-      - run: mkdir build
-      - run: mv coverage/ build/logs/
-
       # Send test coverage to Code Climate
-      - run: ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+      - run: ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $?
 
