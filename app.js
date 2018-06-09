@@ -8,6 +8,7 @@ const stylus = require('stylus');
 
 // ルーター読込
 const crawlsRouter = require('./routes/crawls.js');
+const deadLinksRouter = require('./routes/deadLinks.js');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const validationsRouter = require('./routes/validations');
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/crawls', crawlsRouter);
+app.use('/dead-links', deadLinksRouter);
 app.use('/users', usersRouter);
 app.use('/validations', validationsRouter);
 

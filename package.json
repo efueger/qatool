@@ -7,6 +7,7 @@
     "test": "ava 'tests/**/*.test.js'"
   },
   "dependencies": {
+		"cheerio": "^1.0.0-rc.2",
     "cookie-parser": "~1.4.3",
     "debug": "^2.6.9",
     "express": "~4.16.0",
@@ -14,8 +15,10 @@
     "morgan": "~1.9.0",
     "nedb": "^1.8.0",
     "psi": "^3.1.0",
+		"request": "^2.87.0",
     "stylus": "0.54.5",
 		"twig": "~0.10.3",
+		"urijs": "^1.19.1",
 		"uuid": "^3.2.1",
 		"vnu-jar": "^18.3.0"
   },

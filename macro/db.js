@@ -4,6 +4,7 @@ const log = require('./log.js');
 
 // データベースファイルパス定義
 const PATH_DB_CRAWLS = 'db/crawls';
+const PATH_DB_DEADLINKS = 'db/deadLinks';
 const PATH_DB_VALIDATIONS = 'db/validations';
 
 /**
@@ -24,6 +25,7 @@ const createOptions = filename => {
 
 // データベース読込
 const dbCrawls = new DataStore(createOptions(PATH_DB_CRAWLS));
+const dbDeadLinks = new DataStore(createOptions(PATH_DB_DEADLINKS));
 const dbValidations = new DataStore(createOptions(PATH_DB_VALIDATIONS));
 
 /**
@@ -32,5 +34,6 @@ const dbValidations = new DataStore(createOptions(PATH_DB_VALIDATIONS));
  */
 module.exports = {
 	crawls: dbCrawls,
+	deadLinks: dbDeadLinks,
 	validations: dbValidations
 };

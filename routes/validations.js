@@ -5,10 +5,12 @@ const isUrl = require('../macro/isUrl.js');
 const keys = require('../keys.js');
 const log = require('../macro/log.js');
 const router = express.Router();
+const ValidatorDeadLink = require('../macro/validators/ValidatorDeadLink.js');
 const ValidatorPsi = require('../macro/validators/ValidatorPsi.js');
 const ValidatorW3c = require('../macro/validators/ValidatorW3c.js');
 
 // バリデータインスタンスの生成
+const validatorDeadLink = new ValidatorDeadLink();
 const validatorPsi = new ValidatorPsi();
 const validatorW3c = new ValidatorW3c();
 
@@ -102,6 +104,14 @@ router.post('/:location', async(req, res) => {
 							res.status(500).res('Sorry, internal server error occurred. (500)');
 						});
 						validated.push(validatorW3c.getLabel());
+					}
+					if(req.body.dead_link && req.body.dead_link === 'true') {
+						const resultValidateDeadLink = await validatorDeadLink.validate(req.params.location, found.html);
+						await saveValidateResult(decodedUrl, validatorDeadLink.getLabel(), resultValidateDeadLink).catch(err => {
+							logError(err);
+							res.status(500).res('Sorry, internal server error occurred. (500)');
+						});
+						validated.push(validatorDeadLink);
 					}
 					if(validated.length > 0) {
 						res.send(`Successfully validated "${decodedUrl}". (${validated})`);
