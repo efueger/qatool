@@ -44,6 +44,7 @@ jobs:
       - run: sudo apt-get install oracle-java8-installer
 
       # Setup Code Climate test-reporter
+      - run: mkdir coverage
       - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./coverage/cc-test-reporter
       - run: chmod +x ./coverage/cc-test-reporter
 
