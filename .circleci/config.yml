@@ -45,9 +45,7 @@ jobs:
 
       - run:
         name: Setup Code Climate test-reporter
-        command: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
+        command: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter && chmod +x ./cc-test-reporter
 
       # load CircleCI environment variables
       - run: export GOOGLE_API_KEY=$GOOGLE_API_KEY
