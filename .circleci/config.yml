@@ -5,6 +5,8 @@
 version: 2
 jobs:
   build:
+    environment:
+      CC_TEST_REPORTER_ID: $CODE_CLIMATE_TEST_REPORTER_ID
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -47,7 +49,6 @@ jobs:
 
       # load CircleCI environment variables
       - run: export GOOGLE_API_KEY=$GOOGLE_API_KEY
-      - run: export CC_CLIMATE_TEST_REPORTER_ID=$CODE_CLIMATE_TEST_REPORTER_ID
 
       # run tests!
       - run: npm test
