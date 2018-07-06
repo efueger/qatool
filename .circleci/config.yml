@@ -56,3 +56,4 @@ jobs:
       # Send test coverage to Code Climate
       - run: ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $?
 
+
