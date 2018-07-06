@@ -5,6 +5,8 @@
 version: 2
 jobs:
   build:
+    environment:
+      CC_TEST_REPORTER_ID: $CODE_CLIMATE_TEST_REPORTER_ID
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -41,9 +43,16 @@ jobs:
       - run: sudo apt-get update
       - run: sudo apt-get install oracle-java8-installer
 
+      # Setup Code Climate test-reporter
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run: chmod +x ./cc-test-reporter
+
       # load CircleCI environment variables
       - run: export GOOGLE_API_KEY=$GOOGLE_API_KEY
 
       # run tests!
       - run: npm test
+
+      # Send test coverage to Code Climate
+      - run: ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $?
 
